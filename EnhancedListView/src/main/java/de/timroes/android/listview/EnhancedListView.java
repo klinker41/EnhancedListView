@@ -15,6 +15,9 @@
  */
 package de.timroes.android.listview;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
@@ -22,24 +25,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.VelocityTracker;
-import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -580,7 +571,7 @@ public class EnhancedListView extends ListView {
             mAnimatedViews.add(view);
         }
 
-        ViewPropertyAnimator.animate(view)
+        view.animate()
                 .translationX(toRightSide ? mViewWidth : -mViewWidth)
                 .alpha(0)
                 .setDuration(mAnimationTime)
@@ -683,7 +674,7 @@ public class EnhancedListView extends ListView {
                     slideOutView(mSwipeDownView, mSwipeDownChild, mDownPosition, dismissRight);
                 } else if(mSwiping) {
                     // Swipe back to regular position
-                    ViewPropertyAnimator.animate(mSwipeDownView)
+                    mSwipeDownView.animate()
                             .translationX(0)
                             .alpha(1)
                             .setDuration(mAnimationTime)
@@ -727,8 +718,8 @@ public class EnhancedListView extends ListView {
                 }
 
                 if (mSwiping) {
-                    ViewHelper.setTranslationX(mSwipeDownView, deltaX);
-                    ViewHelper.setAlpha(mSwipeDownView, Math.max(0f, Math.min(1f,
+                    mSwipeDownView.setTranslationX(deltaX);
+                    mSwipeDownView.setAlpha(Math.max(0f, Math.min(1f,
                             1f - 2f * Math.abs(deltaX) / mViewWidth)));
                     return true;
                 }
@@ -804,8 +795,8 @@ public class EnhancedListView extends ListView {
 
                     ViewGroup.LayoutParams lp;
                     for (PendingDismissData pendingDismiss : mPendingDismisses) {
-                        ViewHelper.setAlpha(pendingDismiss.view, 1f);
-                        ViewHelper.setTranslationX(pendingDismiss.view, 0);
+                        pendingDismiss.view.setAlpha(1f);
+                        pendingDismiss.view.setTranslationX(0);
                         lp = pendingDismiss.childView.getLayoutParams();
                         lp.height = originalLayoutHeight;
                         pendingDismiss.childView.setLayoutParams(lp);

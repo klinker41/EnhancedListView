@@ -571,16 +571,18 @@ public class EnhancedListView extends ListView {
             mAnimatedViews.add(view);
         }
 
-        view.animate()
-                .translationX(toRightSide ? mViewWidth : -mViewWidth)
-                .alpha(0)
-                .setDuration(mAnimationTime)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        performDismiss(view, childView, position);
-                    }
-                });
+        try {
+            view.animate()
+                    .translationX(toRightSide ? mViewWidth : -mViewWidth)
+                    .alpha(0)
+                    .setDuration(mAnimationTime)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            performDismiss(view, childView, position);
+                        }
+                    });
+        } catch (Exception e) { }
     }
 
     @Override
@@ -638,11 +640,13 @@ public class EnhancedListView extends ListView {
                 }
 
                 if (mSwipeDownView != null) {
-                    mDownX = ev.getRawX();
-                    mDownPosition = getPositionForView(mSwipeDownView) - getHeaderViewsCount();
+                    try {
+                        mDownX = ev.getRawX();
+                        mDownPosition = getPositionForView(mSwipeDownView) - getHeaderViewsCount();
 
-                    mVelocityTracker = VelocityTracker.obtain();
-                    mVelocityTracker.addMovement(ev);
+                        mVelocityTracker = VelocityTracker.obtain();
+                        mVelocityTracker.addMovement(ev);
+                    } catch (Exception e) { }
                 }
                 super.onTouchEvent(ev);
                 return true;

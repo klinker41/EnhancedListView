@@ -270,7 +270,10 @@ public class EnhancedListView extends ListView {
                     undo.discard();
                 }
                 mUndoActions.clear();
-                mUndoPopup.dismiss();
+
+                try {
+                    mUndoPopup.dismiss();
+                } catch (Exception e) { }
             }
         }
     }

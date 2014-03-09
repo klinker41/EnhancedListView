@@ -765,7 +765,9 @@ public class EnhancedListView extends ListView {
                     // If we swiped into wrong direction, act like this was the new
                     // touch down point
                     mDownX = ev.getRawX();
+                    mDownY = ev.getRawY();
                     deltaX = 0;
+                    deltaY = 0;
                 }
 
                 if (mSwiping) {

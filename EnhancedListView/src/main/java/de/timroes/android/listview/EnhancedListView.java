@@ -393,7 +393,7 @@ public class EnhancedListView extends ListView {
         });
         mUndoPopupTextView = (TextView)undoView.findViewById(R.id.text);
 
-        mUndoPopup = new PopupWindow(undoView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, false);
+        mUndoPopup = new PopupWindow(undoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, false);
         mUndoPopup.setAnimationStyle(R.style.elv_fade_animation);
 
         mScreenDensity = getResources().getDisplayMetrics().density;
@@ -834,7 +834,7 @@ public class EnhancedListView extends ListView {
 
                         // Show undo popup
                         float yLocationOffset = getResources().getDimension(R.dimen.elv_undo_bottom_offset);
-                        mUndoPopup.setWidth((int)Math.min(mScreenDensity * 400, getWidth() * 0.9f));
+                        mUndoPopup.setWidth((int)mScreenDensity * 300);
                         mUndoPopup.showAtLocation(EnhancedListView.this,
                                 Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,
                                 0, (int)(mScreenDensity * 15 + getResources().getDimensionPixelSize(R.dimen.bottom_margin)));
